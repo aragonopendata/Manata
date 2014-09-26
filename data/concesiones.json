@@ -1,0 +1,18 @@
+{
+ "name": "Concesiones",
+ "children": [
+  {
+   "name": "Agricultura y Alimentación",
+   "children": [
+        { "name": "Modernización de Regadios", "size": 5523 },
+        { "name": "Otra cosa", "size": 1231 }
+       ]
+  },
+  {
+   "name": "Educación",
+   "children": [
+        {"name": "Easing", "size": 17010},
+        {"name": "FunctionSequence", "size": 5842}
+  ]
+  }]
+}
