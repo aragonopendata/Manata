@@ -1,9 +1,9 @@
 from django.conf.urls import patterns, url
 
-from navegador import views
+from navegador.views import *
 
 urlpatterns = patterns('',
-    url(r'^$', views.emisores, name='emisores'),
-    url(r'^ayudas$', views.ayudas, name='ayudas'),
-    url(r'^ayudas/beneficiarios$', views.ayudas_beneficiarios, name='ayudas_beneficiarios')
+    url(r'^$', EmisoresView.as_view(), name='emisores'),
+    url(r'^ayudas$', AyudasView.as_view(), name='ayudas'),
+    url(r'^ayudas/beneficiarios$', AyudasBeneficiariosView.as_view(), name='ayudas_beneficiarios')
 )
