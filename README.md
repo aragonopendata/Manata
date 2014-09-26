@@ -4,7 +4,7 @@ Manata
 **Codename Subvenciones** es una aplicación cuyo objetivo es comprobar la transparencia en un tema tan delicado como son las subvenciones públicas. Mediante un interfaz web desarrollado en Django, permite navegar y realizar búsquedas en una base de datos MySQL que contiene todas las subvenciones públicas convocadas y concedidas desde 2012 publicadas en el Boletín Oficial de Aragón.
 
 **Codename Subvenciones** ha sido diseñada y desarrollada gracias a los datos disponibles en el portal OpenData de Aragón por las siguientes personas:
- * Rubén Durán <n3rud0@gmail.com>
+ * Rubén Durán <rduranbal@gmail.com>
  * Jorge Ramón <jrletosa@gmail.com>
  * David Alfonso <davidag81@gmail.com>
  * Jaime Crespo <jynus@jynus.com>
