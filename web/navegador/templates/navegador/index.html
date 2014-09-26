@@ -1,12 +1,6 @@
-{% include "navegador/header.html" %}
+{% extends "navegador/base.html" %}
 
-<div class="jumbotron">
-    <div class="container">
-        <h1>Manata Codename</h1>
-        <p>Aplicación cuyo objetivo es comprobar la transparencia en un tema tan delicado como son las subvenciones públicas. Mediante un interfaz web desarrollado en Django, permite navegar y realizar búsquedas en una base de datos MySQL que contiene todas las subvenciones públicas convocadas y concedidas desde 2012 publicadas en el Boletín Oficial de Aragón.</p>
-    </div>
-</div>
-
+{% block content %}
 <div class="container">
     <!-- Example row of columns -->
     <div class="row">
@@ -27,5 +21,4 @@
         </div>
     </div>
 </div>
-
-{% include "navegador/footer.html" %}
+{% endblock %}
