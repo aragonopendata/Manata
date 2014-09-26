@@ -3,7 +3,7 @@ from django.conf.urls import patterns, url
 from navegador import views
 
 urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'),
-    url(r'^emisor$', views.emisor, name='emisor'),
-    url(r'^emisor/ayuda$', views.ayuda, name='ayuda')
+    url(r'^$', views.emisores, name='emisores'),
+    url(r'^ayudas$', views.ayudas, name='ayudas'),
+    url(r'^ayudas/beneficiarios$', views.ayudas_beneficiarios, name='ayudas_beneficiarios')
 )
