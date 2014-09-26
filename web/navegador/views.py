@@ -5,5 +5,11 @@
     
 from django.http import HttpResponse
 
-def main(request):
+def index(request):
     return HttpResponse("FOOBAR")
+
+def emisor(request):
+    return HttpResponse("EMISOR")
+
+def ayuda(request):
+    return HttpResponse("AYUDA")
