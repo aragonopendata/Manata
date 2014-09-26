@@ -9,6 +9,9 @@ from navegador.models import Concedidas
 from navegador.tables import EmisoresTable
 
 
+class Index(TemplateView):
+    template_name = 'navegador/index.html'
+
 class EmisoresView(TemplateView):
     template_name = 'navegador/emisores.html'
 
