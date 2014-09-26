@@ -1,5 +1,6 @@
-{% include "navegador/header.html" %}
+{% extends "navegador/base.html" %}
 
+{% block content %}
 <div class="container">
 
     <div class="panel panel-default"> 
@@ -25,5 +26,4 @@
     </div>
 
 </div>
-
-{% include "navegador/footer.html" %}
+{% endblock %}
