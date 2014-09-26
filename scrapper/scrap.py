@@ -1,22 +1,49 @@
 # -*- coding: utf-8 -*-
 
+# TODO: Parametrizar años y documentos por iteración
+
 import requests
 from bs4 import BeautifulSoup
 import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
+import MySQLdb
 
-CAMPOS = [u'Concedente',
-          u'Beneficiario',
-          u'Finalidad',
-          u'Importe',
-          u'Norma',
-          u'Ejercicio',
-          u'Importe de ejercicio',
-          u'Modo de concesión',
-          u'Fecha de informe',
-          u'Descripción línea']
+#MYSQL
+HOST = 'localhost'
+PORT = 3306
+USER = 'root'
+PASSWORD = ''
+DATABASE = 'subvenciones'
 
+db = MySQLdb.connect(HOST, USER, PASSWORD, DATABASE, charset='utf8',
+                         use_unicode=True)
+cursor = db.cursor()
+
+lista_campos = [u'Concedente',
+                u'Beneficiario',
+                u'Finalidad',
+                u'Importe',
+                u'Norma',
+                u'Orden',
+                u'Ejercicio',
+                u'Importe de ejercicio',
+                u'Modo de concesión',
+                u'Fecha de informe',
+                u'Descripción línea']
+lista_claves = ['concedente',
+                'beneficiario',
+                'finalidad',
+                'importe',
+                'norma',
+                'orden',
+                'ejercicio',
+                'importe_ejercicio',
+                'modo_concesion',
+                'fecha',
+                'descripcion']
+
+# Extracción de los documentos del html
 def process_soup(soup):
     for p in soup.find_all('p'):
         spans = p.find_all('span')
@@ -25,15 +52,41 @@ def process_soup(soup):
             doc = str(p)
             doc_extraido = {}
 
-            for campo in CAMPOS:
+            for i, campo in enumerate(lista_campos):
+                clave = lista_claves[i]
                 pos = doc.find(campo)
-                doc = doc[pos:]
-                pos = doc.find('</span>') + 7
-                end_pos = doc.find('<br/>')
-                print "%s: %s" % (campo, doc[pos:end_pos].strip())
-            exit(0)
+                if(pos > 0):
+                    doc = doc[pos:]
+                    pos = doc.find('</span>') + 7
+                    end_pos = doc.find('<br/>')
+                    doc_extraido[clave] = doc[pos:end_pos].strip()
+                else:
+                    doc_extraido[clave] = ""
+                #print "%s: %s" % (campo, doc_extraido[clave])
 
-docs_each_iter = 10
+            # Formatos para MySQL
+            fecha = doc_extraido['fecha']
+            fecha_split = fecha.split('/')
+            doc_extraido['fecha'] = '20' + fecha_split[2] + '-' + fecha_split[1] + '-' + fecha_split[0]
+
+            doc_extraido['importe'] = doc_extraido['importe'].replace(',','.')
+            doc_extraido['importe_ejercicio'] = doc_extraido['importe_ejercicio'].replace(',','.')
+
+            insert = "INSERT INTO subvenciones_concedidas " \
+                     "(concedente, beneficiario, finalidad, importe, norma, orden, ejercicio, importe_ejercicio, modo_concesion, fecha, descripcion) " \
+                     " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+
+            valores = [doc_extraido.get(clave) for clave in lista_claves]
+
+            try:
+                cursor.execute(insert, valores)
+            except:
+                print "Fallo en:"
+                print valores
+
+            db.commit()
+
+docs_each_iter = 1000
 
 for year in xrange(2012,2015):
     ini_doc = 1
@@ -48,3 +101,5 @@ for year in xrange(2012,2015):
         keep_looking = num_results == docs_each_iter 
         ini_doc += docs_each_iter
 
+db.commit()
+db.close()
