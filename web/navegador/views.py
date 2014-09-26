@@ -1,17 +1,13 @@
+from django.views.generic import TemplateView
 from django.template import RequestContext, loader
 from django.http import HttpResponse
 
-def emisores(request):
-    template = loader.get_template('navegador/emisores.html')
-    context = RequestContext(request, { })
-    return HttpResponse(template.render(context))
+class EmisoresView(TemplateView):
+    template_name = 'navegador/emisores.html'
 
-def ayudas(request):
-    template = loader.get_template('navegador/ayudas.html')
-    context = RequestContext(request, { })
-    return HttpResponse(template.render(context))
+class AyudasView(TemplateView):
+    template_name = 'navegador/ayudas.html'
 
-def ayudas_beneficiarios(request):
-    template = loader.get_template('navegador/ayudas_beneficiarios.html')
-    context = RequestContext(request, { })
-    return HttpResponse(template.render(context))
+class AyudasBeneficiariosView(TemplateView):
+    template_name = 'navegador/ayudas_beneficiarios.html'
+
