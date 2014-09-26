@@ -5,24 +5,25 @@
     <div class="panel panel-default"> 
       <!-- Default panel contents -->
       <div class="panel-heading">Subvenciones</div>
-      
+
         <!-- Table -->
         <table class="table">
           <tr>
-        <th>Department</th>
+        <th>Emisor</th>
         <th>Nº concesiones</th>
         <th>Importe</th>
           </tr>
-          <tr>
-        <td><a href="ayudas">DepartmentName</a></td>
-        <td>5</td>
-        <td>100 €</td>
-          </tr>
-        </table>
+    {% for concesion in lista_concesores %}
+      <tr>
+        <td><a href="ayudas">{{concesion.concedente__name}}</a></td>
+        <td>{{concesion.num_conexiones}}</td>
+        <td>{{concesion.importe_total}} €</td>
+      </tr>
+    {% endfor %}
+      </table>
 
-    </div>  
+    </div>
 
 </div>
 
 {% include "navegador/footer.html" %}
-
