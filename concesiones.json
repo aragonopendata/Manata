@@ -4,25 +4,23 @@
   {
    "name": "Agricultura y Alimentación",
    "children": [
-    {
-     "name": "Modernización de Regadios"
-    },
-    {
-     "name": "graph",
-     "children": [
-      {"name": "BetweennessCentrality", "value": 3534},
-      {"name": "LinkDistance", "value": 5731},
-      {"name": "MaxFlowMinCut", "value": 7840},
-      {"name": "ShortestPaths", "value": 5914},
-      {"name": "SpanningTree", "value": 3416}
-     ]
-    },
-    {
-     "name": "optimization",
-     "children": [
-      {"name": "AspectRatioBanker", "value": 7074}
-     ]
-    }
+        { "name": "Modernización de Regadios", "value": 123 },
+        {
+         "name": "graph",
+         "children": [
+          {"name": "BetweennessCentrality", "value": 3534},
+          {"name": "LinkDistance", "value": 5731},
+          {"name": "MaxFlowMinCut", "value": 7840},
+          {"name": "ShortestPaths", "value": 5914},
+          {"name": "SpanningTree", "value": 3416}
+         ]
+        },
+        {
+         "name": "optimization",
+         "children": [
+          {"name": "AspectRatioBanker", "value": 7074}
+         ]
+        }
    ]
   },
   {
