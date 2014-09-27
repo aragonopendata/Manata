@@ -5,8 +5,8 @@
 <div class="container">
     <h2>Subvención</h2>
     <div class="panel panel-default">
-        <p><strong>Concedente</strong>: {{ subvencion.concedente.name }}</p>
-        <p><strong>Beneficiario</strong>: {{ subvencion.beneficiario.name }}</p>
+        <p><strong>Concedente</strong>: <a href="{% url 'ayudas_concedente' concedente=subvencion.concedente.id %}">{{ subvencion.concedente.name }}</a></p>
+        <p><strong>Beneficiario</strong>: <a href="{% url 'ayudas_beneficiario' beneficiario=subvencion.beneficiario.id %}">{{ subvencion.beneficiario.name }}</a></p>
         <p><strong>Finalidad</strong>: {{ subvencion.finalidad.name }}</p>
         <p><strong>Importe</strong>: {{ subvencion.importe }} €</p>
         {% if norma %}
