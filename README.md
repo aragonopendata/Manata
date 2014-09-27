@@ -14,11 +14,18 @@ El código de esta aplicación está licenciado bajo la bajo licencia EUPL http:
 Dependencias
 ============
 Python 2.7
+
 python-requests 2.3.0
+
 beautifulsoup4 4.3.2
+
 python-MySQLdb 1.2.3
+
 Django 1.6.6
+
 django-tables2 0.15.0
+
 django-chartit 0.1
+
 simplejson 3.6.3
 
