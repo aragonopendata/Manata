@@ -74,9 +74,8 @@ class AyudasBeneficiarioView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(AyudasBeneficiarioView, self).get_context_data(**kwargs)
         beneficiario = kwargs.get('beneficiario')
-        concesiones = Concedidas.objects.filter(beneficiario=beneficiario)
+        concesiones = Concedidas.objects.filter(beneficiario=beneficiario).order_by('-fecha')
         context['beneficiario'] = Beneficiarios.objects.get(id=beneficiario)
-        concesiones = concesiones.values('concedente__name', 'fecha').annotate(importe_total=Sum('importe_ejercicio')).order_by('-fecha')
         table = AyudasBeneficiarioTable(concesiones)
         RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
         context['table'] = table
@@ -90,9 +89,8 @@ class AyudasConcedenteView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(AyudasConcedenteView, self).get_context_data(**kwargs)
         concedente = kwargs.get('concedente')
-        concesiones = Concedidas.objects.filter(concedente=concedente)
+        concesiones = Concedidas.objects.filter(concedente=concedente).order_by('-fecha')
         context['concedente'] = Concedentes.objects.get(id=concedente)
-        concesiones = concesiones.values('beneficiario__name', 'fecha').annotate(importe_total=Sum('importe_ejercicio')).order_by('-fecha')
         table = AyudasConcedenteTable(concesiones)
         RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
         context['table'] = table
@@ -123,4 +121,12 @@ class ConvocadasView(TemplateView):
         context['table'] = table
         return context
 
+class SubvencionView(TemplateView):
+    template_name = 'navegador/subvencion.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(SubvencionView, self).get_context_data(**kwargs)
+        subvencion_id = kwargs.get('subvencion')
+        subvencion = Concedidas.objects.get(id=subvencion_id)
+        context['subvencion'] = subvencion
+        return context

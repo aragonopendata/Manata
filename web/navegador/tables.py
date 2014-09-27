@@ -39,24 +39,32 @@ class AyudasTable(tables.Table):
 
 
 class AyudasBeneficiarioTable(tables.Table):
-    concedente__name = tables.Column(verbose_name="Concedente")
-    importe_total = tables.Column(verbose_name="Importe")
+    concedente = tables.Column(verbose_name="Concedente")
+    importe_ejercicio = tables.Column(verbose_name="Importe")
     fecha = tables.Column(verbose_name="Fecha informe")
+    enlace = tables.Column(verbose_name="Detalles", orderable=False, empty_values=())
 
-    def render_importe_total(self, value):
+    def render_importe_ejercicio(self, value):
         return '%s €' % value
+
+    def render_enlace(self, record):
+        return mark_safe("<a href='%s'>Ver detalles</a>" % reverse('subvencion', kwargs={'subvencion': record.id}))
 
     class Meta:
         attrs = {"class": "table"}
 
 
 class AyudasConcedenteTable(tables.Table):
-    beneficiario__name = tables.Column(verbose_name="Beneficiario")
-    importe_total = tables.Column(verbose_name="Importe")
+    beneficiario = tables.Column(verbose_name="Beneficiario")
+    importe_ejercicio = tables.Column(verbose_name="Importe")
     fecha = tables.Column(verbose_name="Fecha informe")
+    enlace = tables.Column(verbose_name="Detalles", orderable=False, empty_values=())
 
-    def render_importe_total(self, value):
+    def render_importe_ejercicio(self, value):
         return '%s €' % value
+
+    def render_enlace(self, record):
+        return mark_safe("<a href='%s'>Ver detalles</a>" % reverse('subvencion', kwargs={'subvencion': record.id}))
 
     class Meta:
         attrs = {"class": "table"}
