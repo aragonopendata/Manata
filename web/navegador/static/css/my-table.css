@@ -3,6 +3,10 @@ table.paleblue +  ul.pagination {
     font: normal 11px/14px 'Lucida Grande', Verdana, Helvetica, Arial, sans-serif;
 }
 
+div.table-container {
+  display: block;
+}
+
 table a:link,
 table a:visited,
 table + ul.pagination > li > a {

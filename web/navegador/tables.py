@@ -79,7 +79,11 @@ class AyudasConcedenteTable(tables.Table):
 class ConvocadasTable(tables.Table):
     titulo = tables.Column(verbose_name="Título")
     fecha = tables.Column(verbose_name="Fecha")
-
+    urlpdf = tables.Column(verbose_name="PDF")
+    
+    def render_urlpdf(self, value):
+      return mark_safe('<a href="%s" class="btn-lg"><span class="glyphicon glyphicon-file"></span></a>' % value)
+    
     class Meta:
         attrs = {"class": "table"}
 

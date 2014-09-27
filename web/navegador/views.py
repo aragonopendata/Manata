@@ -115,7 +115,7 @@ class ConvocadasView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ConvocadasView, self).get_context_data(**kwargs)
         emisor = kwargs.get('emisor')
-        lista_convocadas = Convocadas.objects.values('titulo', 'fecha').order_by('-fecha')
+        lista_convocadas = Convocadas.objects.values('titulo', 'fecha', 'urlpdf').order_by('-fecha')
         table = ConvocadasTable(lista_convocadas)
         RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
         context['table'] = table
