@@ -14,11 +14,12 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <!-- djanfo-tables2 -->
-    <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}" />
+     <!--<link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}" /> -->
+    <link href="{% static 'css/my-table.css' %}" rel="stylesheet">
     
-    <style type="text/css">
+     <style type="text/css">
       div.table-container {display: block;}
-    </style>
+      </style> 
  
     <script src="{% static 'js/highcharts.js' %}"></script>
 {% endblock %}

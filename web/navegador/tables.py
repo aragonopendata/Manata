@@ -28,14 +28,14 @@ class AyudasTable(tables.Table):
         return '%s €' % value
 
     class Meta:
-        attrs = {"class": "paleblue"}
+        attrs = {"class": "table"}
 
 class ConvocadasTable(tables.Table):
     titulo = tables.Column(verbose_name="Título")
     fecha = tables.Column(verbose_name="Fecha")
 
     class Meta:
-        attrs = {"class": "paleblue"}
+        attrs = {"class": "table"}
 
 
 class AyudasBeneficiariosTable(tables.Table):
@@ -51,4 +51,4 @@ class AyudasBeneficiariosTable(tables.Table):
         return '%s €' % value
 
     class Meta:
-        attrs = {"class": "paleblue"}
+        attrs = {"class": "table"}
