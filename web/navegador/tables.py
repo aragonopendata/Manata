@@ -9,8 +9,8 @@ class EmisoresTable(tables.Table):
     num_concesiones = tables.Column(verbose_name="Nº concesiones")
     importe_total = tables.Column(verbose_name="Importe total")
 
-    def render_concedente__name(self, value):
-        return mark_safe("<a href='%s'>%s</a>" % (reverse('ayudas'), value))
+    def render_concedente__name(self, value, record):
+        return mark_safe("<a href='%s'>%s</a>" % (reverse('ayudas', kwargs={'emisor': record['concedente']}), value))
 
     def render_importe_total(self, value):
         return '%s €' % value
