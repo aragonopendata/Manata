@@ -32,10 +32,11 @@ class EmisoresView(TemplateView):
                 PivotDataPool(
                    series= [
                     {'options': {
-                     'source': Concedidas.objects.filter(ejercicio=2013),
-                     'categories': 'concedente'},
+                     'source': Concedidas.objects.filter(ejercicio=2013).values('concedente__name', 'importe_ejercicio'),
+                     'categories': 'concedente__name'},
                      'terms': {
-                        'importe_total': Sum('importe_ejercicio')
+                        'importe_total': Sum('importe_ejercicio'),
+                        #'legend_by': ['concedente__name'],
                      }
                     }])
 
@@ -44,10 +45,11 @@ class EmisoresView(TemplateView):
                 series_options = [
                   {'options': {
                    'type': 'column'},
-                   'terms': ['importe_total']}])
+                   'terms': ['importe_total']}],
+                chart_options = {})
 
-            return render_to_response({'chart': pivcht})
-        else:    
+            return self.render_to_response({'chart': pivcht})
+        else:
             return self.render_to_response(self.get_context_data())
 
     def generate_chart(self):
