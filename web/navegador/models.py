@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 
 class Concedidas(models.Model):
@@ -15,6 +16,7 @@ class Concedidas(models.Model):
 
     class Meta:
         db_table = 'subvenciones_concedidas'
+        verbose_name = 'concedida'
         managed = False
 
 
@@ -23,6 +25,7 @@ class Concedentes(models.Model):
 
     class Meta:
         db_table = 'concedentes'
+        verbose_name = 'concedente'
         managed = False
 
     def __str__(self):
@@ -34,6 +37,7 @@ class Beneficiarios(models.Model):
 
     class Meta:
         db_table = 'beneficiarios'
+        verbose_name = 'beneficiario'
         managed = False
 
     def __str__(self):
@@ -84,6 +88,8 @@ class Convocadas(models.Model):
 
     class Meta:
         db_table = 'subvenciones_convocadas'
+        verbose_name = 'subvención convocada'
+        verbose_name_plural = 'subvenciones convocadas'
         managed = False
 
 
