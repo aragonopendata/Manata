@@ -16,11 +16,7 @@ class EmisoresTable(tables.Table):
         return '%s €' % value
 
     class Meta:
-<<<<<<< HEAD
-        #attrs = {"class": "paleblue"}
         attrs = {"class": "table"}
-=======
-        attrs = {"class": "paleblue"}
 
 
 class AyudasBeneficiariosTable(tables.Table):
@@ -36,4 +32,3 @@ class AyudasBeneficiariosTable(tables.Table):
 
     class Meta:
         attrs = {"class": "paleblue"}
->>>>>>> 0170f6599017dc9d82365eb97027bd98c9647e13
