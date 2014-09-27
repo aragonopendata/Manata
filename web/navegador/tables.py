@@ -16,4 +16,5 @@ class EmisoresTable(tables.Table):
         return '%s €' % value
 
     class Meta:
-        attrs = {"class": "paleblue"}
+        #attrs = {"class": "paleblue"}
+        attrs = {"class": "table"}
