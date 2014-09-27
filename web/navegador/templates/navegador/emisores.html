@@ -1,29 +1,11 @@
 {% extends "navegador/base.html" %}
+{% load render_table from django_tables2 %}
 
 {% block content %}
 <div class="container">
-
-    <div class="panel panel-default"> 
-      <!-- Default panel contents -->
+    <div class="panel panel-default">
       <div class="panel-heading">Subvenciones</div>
-
-        <!-- Table -->
-        <table class="table">
-          <tr>
-        <th>Emisor</th>
-        <th>Nº concesiones</th>
-        <th>Importe</th>
-          </tr>
-    {% for concesion in lista_concesores %}
-      <tr>
-        <td><a href="ayudas">{{concesion.concedente__name}}</a></td>
-        <td>{{concesion.num_conexiones}}</td>
-        <td>{{concesion.importe_total}} €</td>
-      </tr>
-    {% endfor %}
-      </table>
-
+        {% render_table table %}
     </div>
-
 </div>
 {% endblock %}
