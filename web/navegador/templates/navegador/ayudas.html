@@ -1,1 +1,13 @@
-AYUDAS
+{% extends "navegador/base.html" %}
+{% load render_table from django_tables2 %}
+
+{% block content %}
+<div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">Subvenciones concedidas
+        {% if concedente %} por {{ concedente }} {% endif %}
+      </div>
+        {% render_table table %}
+    </div>
+</div>
+{% endblock %}

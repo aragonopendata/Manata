@@ -19,6 +19,18 @@ class EmisoresTable(tables.Table):
         attrs = {"class": "table"}
 
 
+class AyudasTable(tables.Table):
+    beneficiario__name = tables.Column(verbose_name="Beneficiario")
+    importe_total = tables.Column(verbose_name="Importe")
+    fecha = tables.Column(verbose_name="Fecha informe")
+
+    def render_importe_total(self, value):
+        return '%s €' % value
+
+    class Meta:
+        attrs = {"class": "paleblue"}
+
+
 class AyudasBeneficiariosTable(tables.Table):
     beneficiario__name = tables.Column(verbose_name="Beneficiario")
     num_concesiones = tables.Column(verbose_name="Nº concesiones")

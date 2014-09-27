@@ -11,9 +11,8 @@ from chartit import PivotDataPool, PivotChart
 
 from django_tables2 import RequestConfig
 
-from navegador.models import Concedidas
-from navegador.tables import EmisoresTable
-from navegador.tables import AyudasBeneficiariosTable 
+from navegador.models import Concedidas, Concedentes
+from navegador.tables import EmisoresTable,AyudasTable, AyudasBeneficiariosTable
 
 
 class Index(TemplateView):
@@ -64,9 +63,16 @@ class AyudasView(TemplateView):
         context = super(AyudasView, self).get_context_data(**kwargs)
         emisor = kwargs.get('emisor')
         if emisor:
-            pass    # TODO
+            concesiones = Concedidas.objects.filter(concedente=emisor)
+            context['concedente'] = Concedentes.objects.get(id=emisor)
+        else:
+            concesiones = Concedidas.objects.all()
+        concesiones = concesiones.values('beneficiario__name', 'fecha').annotate(importe_total=Sum('importe_ejercicio')).order_by('-fecha')
+        table = AyudasTable(concesiones)
+        RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
+        context['table'] = table
+        # TODO: Chart???
 
-        # TODO
         return context
 
 
