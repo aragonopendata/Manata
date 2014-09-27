@@ -38,7 +38,7 @@ class EmisoresView(TemplateView):
             datasource = concesores_data,
             series_options = [
                 {'options': {
-                'type': 'column'},
+                'type': 'bar'},
                 'terms': ['importe_total']}],
             chart_options = {})
 
