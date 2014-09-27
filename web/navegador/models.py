@@ -36,6 +36,9 @@ class Beneficiarios(models.Model):
         db_table = 'beneficiarios'
         managed = False
 
+    def __str__(self):
+        return self.name
+
 
 class Finalidades(models.Model):
     name = models.CharField(max_length=65000)

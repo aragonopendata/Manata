@@ -11,8 +11,9 @@ from chartit import PivotDataPool, PivotChart
 
 from django_tables2 import RequestConfig
 
-from navegador.models import Concedidas, Convocadas, Concedentes
-from navegador.tables import AyudasBeneficiariosTable, AyudasTable, EmisoresTable, ConvocadasTable
+# FIXME
+from navegador.models import *
+from navegador.tables import *
 
 
 class Index(TemplateView):
@@ -43,9 +44,6 @@ class EmisoresView(TemplateView):
 
         return pivcht
 
-    def generate_chart(self):
-        pass
-
     def get_context_data(self, **kwargs):
         context = super(EmisoresView, self).get_context_data(**kwargs)
         lista_concesores = Concedidas.objects.filter(ejercicio=2013).values('concedente__name', 'concedente').annotate(importe_total=Sum('importe_ejercicio'), num_concesiones=Count('concedente__name')).order_by('-importe_total')
@@ -62,28 +60,53 @@ class AyudasView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(AyudasView, self).get_context_data(**kwargs)
         emisor = kwargs.get('emisor')
-        if emisor:
-            concesiones = Concedidas.objects.filter(concedente=emisor)
-            context['concedente'] = Concedentes.objects.get(id=emisor)
-        else:
-            concesiones = Concedidas.objects.all()
-        concesiones = concesiones.values('beneficiario__name', 'fecha').annotate(importe_total=Sum('importe_ejercicio')).order_by('-fecha')
+        concesiones = Concedidas.objects.all().values('concedente__name', 'beneficiario__name', 'fecha', 'concedente', 'beneficiario').annotate(importe_total=Sum('importe_ejercicio')).order_by('-fecha')
         table = AyudasTable(concesiones)
         RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
         context['table'] = table
-        # TODO: Chart???
 
         return context
 
 
-class AyudasBeneficiariosView(TemplateView):
-    template_name = 'navegador/ayudas_beneficiarios.html'
+class AyudasBeneficiarioView(TemplateView):
+    template_name = 'navegador/ayudas_beneficiario.html'
 
     def get_context_data(self, **kwargs):
-        context = super(AyudasBeneficiariosView, self).get_context_data(**kwargs)
-        # origen_subvencion = kwargs
-        lista_beneficiarios = Concedidas.objects.filter(ejercicio=2013).values('beneficiario__name', 'descripcion').annotate(importe_total=Sum('importe_ejercicio'), num_concesiones=Count('beneficiario__name')).order_by('beneficiario__name', '-importe_total')
-        table = AyudasBeneficiariosTable(lista_beneficiarios)
+        context = super(AyudasBeneficiarioView, self).get_context_data(**kwargs)
+        beneficiario = kwargs.get('beneficiario')
+        concesiones = Concedidas.objects.filter(beneficiario=beneficiario)
+        context['beneficiario'] = Beneficiarios.objects.get(id=beneficiario)
+        concesiones = concesiones.values('concedente__name', 'fecha').annotate(importe_total=Sum('importe_ejercicio')).order_by('-fecha')
+        table = AyudasBeneficiarioTable(concesiones)
+        RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
+        context['table'] = table
+
+        return context
+
+
+class AyudasConcedenteView(TemplateView):
+    template_name = 'navegador/ayudas_concedente.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AyudasConcedenteView, self).get_context_data(**kwargs)
+        concedente = kwargs.get('concedente')
+        concesiones = Concedidas.objects.filter(concedente=concedente)
+        context['concedente'] = Concedentes.objects.get(id=concedente)
+        concesiones = concesiones.values('beneficiario__name', 'fecha').annotate(importe_total=Sum('importe_ejercicio')).order_by('-fecha')
+        table = AyudasConcedenteTable(concesiones)
+        RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
+        context['table'] = table
+
+        return context
+
+
+class BeneficiariosView(TemplateView):
+    template_name = 'navegador/beneficiarios.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(BeneficiariosView, self).get_context_data(**kwargs)
+        lista_beneficiarios = Concedidas.objects.filter(ejercicio=2013).values('beneficiario__name', 'beneficiario').annotate(importe_total=Sum('importe_ejercicio'), num_concesiones=Count('concedente__name')).order_by('-importe_total')
+        table = BeneficiariosTable(lista_beneficiarios)
         RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
         context['table'] = table
         return context
