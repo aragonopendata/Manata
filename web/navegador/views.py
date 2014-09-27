@@ -27,7 +27,7 @@ class EmisoresView(TemplateView):
             PivotDataPool(
                 series= [
                 {'options': {
-                    'source': Concedidas.objects.filter(ejercicio=2013).values('concedente__name', 'importe_ejercicio'),
+                    'source': Concedidas.objects.all().values('concedente__name', 'importe_ejercicio'),
                     'categories': 'concedente__name'},
                     'terms': {
                     'importe_total': Sum('importe_ejercicio'),
@@ -46,7 +46,7 @@ class EmisoresView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(EmisoresView, self).get_context_data(**kwargs)
-        lista_concesores = Concedidas.objects.filter(ejercicio=2013).values('concedente__name', 'concedente').annotate(importe_total=Sum('importe_ejercicio'), num_concesiones=Count('concedente__name')).order_by('-importe_total')
+        lista_concesores = Concedidas.objects.all().values('concedente__name', 'concedente').annotate(importe_total=Sum('importe_ejercicio'), num_concesiones=Count('concedente__name')).order_by('-importe_total')
         table = EmisoresTable(lista_concesores)
         RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
         context['table'] = table
@@ -103,7 +103,7 @@ class BeneficiariosView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(BeneficiariosView, self).get_context_data(**kwargs)
-        lista_beneficiarios = Concedidas.objects.filter(ejercicio=2013).values('beneficiario__name', 'beneficiario').annotate(importe_total=Sum('importe_ejercicio'), num_concesiones=Count('concedente__name')).order_by('-importe_total')
+        lista_beneficiarios = Concedidas.objects.all().values('beneficiario__name', 'beneficiario').annotate(importe_total=Sum('importe_ejercicio'), num_concesiones=Count('concedente__name')).order_by('-importe_total')
         table = BeneficiariosTable(lista_beneficiarios)
         RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
         context['table'] = table
