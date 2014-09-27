@@ -17,3 +17,18 @@ class EmisoresTable(tables.Table):
 
     class Meta:
         attrs = {"class": "paleblue"}
+
+
+class AyudasBeneficiariosTable(tables.Table):
+    beneficiario__name = tables.Column(verbose_name="Beneficiario")
+    num_concesiones = tables.Column(verbose_name="Nº concesiones")
+    importe_total = tables.Column(verbose_name="Importe total")
+
+    def render_concedente__name(self, value, record):
+        return mark_safe("<a href='%s'>%s</a>" % (reverse('ayudas', kwargs={'emisor': record['concedente']}), value))
+
+    def render_importe_total(self, value):
+        return '%s €' % value
+
+    class Meta:
+        attrs = {"class": "paleblue"}

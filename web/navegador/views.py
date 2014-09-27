@@ -13,6 +13,7 @@ from django_tables2 import RequestConfig
 
 from navegador.models import Concedidas
 from navegador.tables import EmisoresTable
+from navegador.tables import AyudasBeneficiariosTable 
 
 
 class Index(TemplateView):
@@ -71,3 +72,13 @@ class AyudasView(TemplateView):
 
 class AyudasBeneficiariosView(TemplateView):
     template_name = 'navegador/ayudas_beneficiarios.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AyudasBeneficiariosView, self).get_context_data(**kwargs)
+        # origen_subvencion = kwargs
+        lista_beneficiarios = Concedidas.objects.filter(ejercicio=2013).values('beneficiario__name').annotate(importe_total=Sum('importe_ejercicio'), num_concesiones=Count('beneficiario__name')).order_by('-importe_total')
+        table = AyudasBeneficiariosTable(lista_beneficiarios)
+        RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
+        context['table'] = table
+        return context
+
