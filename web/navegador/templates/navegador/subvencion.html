@@ -1,0 +1,26 @@
+{% extends "navegador/base.html" %}
+{% load render_table from django_tables2 %}
+
+{% block content %}
+<div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">Subvención</div>
+        <p><strong>Concedente</strong>: {{ subvencion.concedente.name }}</p>
+        <p><strong>Beneficiario</strong>: {{ subvencion.beneficiario.name }}</p>
+        <p><strong>Finalidad</strong>: {{ subvencion.finalidad.name }}</p>
+        <p><strong>Importe</strong>: {{ subvencion.importe }} €</p>
+        {% if norma %}
+        <p><strong>Norma</strong>: {{ subvencion.norma.name }}</p>
+        {% endif %}
+        {% if orden %}
+        <p><strong>Orden</strong>: {{ subvencion.orden.name }}</p>
+        {% endif%}
+        <p><strong>Ejercicio</strong>: {{ subvencion.ejercicio }}</p>
+        <p><strong>Importe ejercicio</strong>: {{ subvencion.importe_ejercicio }}</p>
+        <p><strong>Modo concesión</strong>: {{ subvencion.Modo_concesion.name }}</p>
+        <p><strong>Fecha</strong>: {{ subvencion.fecha }}</p>
+        <p><strong>Descripción</strong>: {{ subvencion.descripcion }}</p>
+    </div>
+</div>
+{% endblock %}
+
