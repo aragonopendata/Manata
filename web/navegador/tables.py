@@ -82,7 +82,7 @@ class ConvocadasTable(tables.Table):
     urlpdf = tables.Column(verbose_name="PDF", orderable=False)
     
     def render_urlpdf(self, value):
-      return mark_safe('<a href="%s" class="btn-lg"><span class="glyphicon glyphicon-file"></span></a>' % value)
+      return mark_safe("<a href='%s' class='btn-lg'><span class='glyphicon glyphicon-file'></span></a>" % value)
     
     class Meta:
         attrs = {"class": "table"}
