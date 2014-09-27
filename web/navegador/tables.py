@@ -47,6 +47,9 @@ class AyudasBeneficiarioTable(tables.Table):
     def render_importe_ejercicio(self, value):
         return '%s €' % value
 
+    def render_concedente(self, value, record):
+        return mark_safe("<a href='%s'>%s</a>" % (reverse('ayudas_concedente', kwargs={'concedente': record.concedente.id}), value))
+
     def render_enlace(self, record):
         return mark_safe("<a href='%s'>Ver detalles</a>" % reverse('subvencion', kwargs={'subvencion': record.id}))
 
@@ -62,6 +65,9 @@ class AyudasConcedenteTable(tables.Table):
 
     def render_importe_ejercicio(self, value):
         return '%s €' % value
+
+    def render_beneficiario(self, value, record):
+        return mark_safe("<a href='%s'>%s</a>" % (reverse('ayudas_beneficiario', kwargs={'beneficiario': record.concedente.id}), value))
 
     def render_enlace(self, record):
         return mark_safe("<a href='%s'>Ver detalles</a>" % reverse('subvencion', kwargs={'subvencion': record.id}))
