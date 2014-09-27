@@ -11,8 +11,8 @@ from chartit import PivotDataPool, PivotChart
 
 from django_tables2 import RequestConfig
 
-from navegador.models import Concedidas, Concedentes
-from navegador.tables import EmisoresTable,AyudasTable, AyudasBeneficiariosTable
+from navegador.models import Concedidas, Convocadas, Concedentes
+from navegador.tables import AyudasBeneficiariosTable, AyudasTable, EmisoresTable, ConvocadasTable
 
 
 class Index(TemplateView):
@@ -82,9 +82,22 @@ class AyudasBeneficiariosView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(AyudasBeneficiariosView, self).get_context_data(**kwargs)
         # origen_subvencion = kwargs
-        lista_beneficiarios = Concedidas.objects.filter(ejercicio=2013).values('beneficiario__name').annotate(importe_total=Sum('importe_ejercicio'), num_concesiones=Count('beneficiario__name')).order_by('-importe_total')
+        lista_beneficiarios = Concedidas.objects.filter(ejercicio=2013).values('beneficiario__name', 'descripcion').annotate(importe_total=Sum('importe_ejercicio'), num_concesiones=Count('beneficiario__name')).order_by('beneficiario__name', '-importe_total')
         table = AyudasBeneficiariosTable(lista_beneficiarios)
         RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
         context['table'] = table
         return context
+
+class ConvocadasView(TemplateView):
+    template_name = 'navegador/convocadas.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ConvocadasView, self).get_context_data(**kwargs)
+        emisor = kwargs.get('emisor')
+        lista_convocadas = Convocadas.objects.values('titulo', 'fecha').order_by('-fecha')
+        table = ConvocadasTable(lista_convocadas)
+        RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
+        context['table'] = table
+        return context
+
 

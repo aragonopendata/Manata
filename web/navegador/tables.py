@@ -30,9 +30,17 @@ class AyudasTable(tables.Table):
     class Meta:
         attrs = {"class": "paleblue"}
 
+class ConvocadasTable(tables.Table):
+    titulo = tables.Column(verbose_name="Título")
+    fecha = tables.Column(verbose_name="Fecha")
+
+    class Meta:
+        attrs = {"class": "paleblue"}
+
 
 class AyudasBeneficiariosTable(tables.Table):
     beneficiario__name = tables.Column(verbose_name="Beneficiario")
+    descripcion = tables.Column(verbose_name="Línea")
     num_concesiones = tables.Column(verbose_name="Nº concesiones")
     importe_total = tables.Column(verbose_name="Importe total")
 

@@ -77,6 +77,7 @@ class Convocadas(models.Model):
     titulo = models.CharField(max_length=65000)
     texto = models.CharField(max_length=2000000000)
     urlpdf = models.CharField(max_length=650000)
+    fecha = models.DateField()
 
     class Meta:
         db_table = 'subvenciones_convocadas'
