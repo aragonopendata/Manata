@@ -3,8 +3,6 @@ import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-import pprint
-
 from django.views.generic import TemplateView
 from django.template import RequestContext, loader
 from django.http import HttpResponse
@@ -22,35 +20,28 @@ class Index(TemplateView):
 
 class EmisoresView(TemplateView):
     template_name = 'navegador/emisores.html'
-    concedidas = Concedidas.objects.filter(ejercicio=2013).values('concedente__name').annotate(importe_total=Sum('importe_ejercicio'), num_conexiones=Count('concedente__name')).order_by('-importe_total')
 
-    def get(self, request, *args, **kwargs):
-        pp = pprint.PrettyPrinter(indent=4)
-        #pp.pprint(self.concedidas)
-        if request.GET.get('graph', ''):
-            concesores_data= \
-                PivotDataPool(
-                   series= [
-                    {'options': {
-                     'source': Concedidas.objects.filter(ejercicio=2013).values('concedente__name', 'importe_ejercicio'),
-                     'categories': 'concedente__name'},
-                     'terms': {
-                        'importe_total': Sum('importe_ejercicio'),
-                        #'legend_by': ['concedente__name'],
-                     }
-                    }])
+    def get_chart(self):
+        concesores_data= \
+            PivotDataPool(
+                series= [
+                {'options': {
+                    'source': Concedidas.objects.filter(ejercicio=2013).values('concedente__name', 'importe_ejercicio'),
+                    'categories': 'concedente__name'},
+                    'terms': {
+                    'importe_total': Sum('importe_ejercicio'),
+                    }
+                }])
 
-            pivcht = PivotChart(
-                datasource = concesores_data, 
-                series_options = [
-                  {'options': {
-                   'type': 'column'},
-                   'terms': ['importe_total']}],
-                chart_options = {})
+        pivcht = PivotChart(
+            datasource = concesores_data,
+            series_options = [
+                {'options': {
+                'type': 'column'},
+                'terms': ['importe_total']}],
+            chart_options = {})
 
-            return self.render_to_response({'chart': pivcht})
-        else:
-            return self.render_to_response(self.get_context_data())
+        return pivcht
 
     def generate_chart(self):
         pass
@@ -61,6 +52,7 @@ class EmisoresView(TemplateView):
         table = EmisoresTable(lista_concesores)
         RequestConfig(self.request, paginate={"per_page": 25}).configure(table)
         context['table'] = table
+        context['chart'] = self.get_chart()
         return context
 
 
