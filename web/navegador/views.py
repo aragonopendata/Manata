@@ -40,7 +40,11 @@ class EmisoresView(TemplateView):
                 {'options': {
                 'type': 'bar'},
                 'terms': ['importe_total']}],
-            chart_options = {})
+            chart_options = {
+                'title': {
+                   'text': 'Importe total de subvenciones concedidas'},
+            }
+        )
 
         return pivcht
 
